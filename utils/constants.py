@@ -1,4 +1,5 @@
 import os
+import re
 
 config_path = "config"
 
@@ -18,21 +19,26 @@ sort_log_path = os.path.join(output_path, "sort.log")
 
 log_path = os.path.join(output_path, "log.log")
 
-url_domain_pattern = r"((https?|rtmp)://)?(\[[0-9a-fA-F:]+]|([\w-]+\.)+[\w-]+)(:[0-9]{1,5})?"
+url_host_pattern = re.compile(r"((https?|rtmp)://)?(\[[0-9a-fA-F:]+]|([\w-]+\.)+[\w-]+)")
 
-url_pattern = url_domain_pattern + r"(/\S*)?(\$\S+)?"
+url_pattern = re.compile(url_host_pattern.pattern + r"(.*)?")
 
-rtmp_url_pattern = r"^rtmp://.*$"
+rtmp_url_pattern = re.compile(r"^rtmp://.*$")
 
-rtp_pattern = r"^([^,，]+)(?:[,，])?(rtp://.*)$"
+rtp_pattern = re.compile(r"^([^,，]+)[,，]?(rtp://.*)$")
 
-demo_txt_pattern = r"^([^,，]+)(?:[,，])?(?!#genre#)" + r"(" + url_pattern + r")?"
+demo_txt_pattern = re.compile(r"^([^,，]+)[,，]?(?!#genre#)" + r"(" + url_pattern.pattern + r")?")
 
-txt_pattern = r"^([^,，]+)(?:[,，])(?!#genre#)" + r"(" + url_pattern + r")"
+txt_pattern = re.compile(r"^([^,，]+)[,，](?!#genre#)" + r"(" + url_pattern.pattern + r")")
 
-m3u_pattern = r"^#EXTINF:-1.*?(?:，|,)(.*?)\n" + r"(" + url_pattern + r")"
+multiline_txt_pattern = re.compile(r"^([^,，]+)[,，](?!#genre#)" + r"(" + url_pattern.pattern + r")", re.MULTILINE)
 
-sub_pattern = r"-|_|\((.*?)\)|\（(.*?)\）|\[(.*?)\]|\「(.*?)\」| |｜|频道|普清|标清|高清|HD|hd|超清|超高|超高清|中央|央视|电视台|台|电信|联通|移动"
+m3u_pattern = re.compile(r"^#EXTINF:-1.*?[，,](.*?)\n" + r"(" + url_pattern.pattern + r")")
+
+multiline_m3u_pattern = re.compile(r"^#EXTINF:-1.*?[，,](.*?)\n" + r"(" + url_pattern.pattern + r")", re.MULTILINE)
+
+sub_pattern = re.compile(
+    r"-|_|\((.*?)\)|（(.*?)）|\[(.*?)]|「(.*?)」| |｜|频道|普清|标清|高清|HD|hd|超清|超高|超高清|中央|央视|电视台|台|电信|联通|移动")
 
 replace_dict = {
     "plus": "+",
@@ -103,6 +109,8 @@ origin_map = {
     "multicast": "组播源",
     "subscribe": "订阅源",
     "online_search": "关键字源",
+    "whitelist": "白名单",
+    "local": "本地源",
 }
 
 ipv6_proxy = "http://www.ipv6proxy.net/go.php?u="

@@ -1,5 +1,84 @@
 # 更新日志（Changelog）
 
+## v1.6.1
+
+### 2025/2/21
+
+- 🎉 预告：💻[IPTV-Web](https://github.com/Guovin/iptv-web)：IPTV电视直播源管理平台，支持在线播放等功能，开发中...
+- ⚠️ 注意：若属于旧版本升级，更新该版本需要手动删除旧版本结果缓存文件`output/cache.pkl`
+- ✨ 新增支持`IPv6域名解析`，提升IPv6接口识别能力（#910）
+- ✨ Docker更新时间环境变量精简为`UPDATE_CRON`，支持多个时间设置（#920）
+- ✨ 更新组播源与酒店源离线数据
+- 🪄 移除默认代理，由于集中访问压力过大，出现失效情况，建议自行定义订阅源和结果的代理地址，或关注公众号回复获取代理地址
+- 🪄 重构频道数据格式`tuple`为`dict`，增加类型定义，优化数据处理，调整目录结构
+- 🪄 正则匹配预编译，提升效率
+- 🐛 调整Docker `FFmpeg`构建版本，解决部分域名无法获取分辨率问题（#864）
+- 🐛 修复Docker重启时创建重复定时任务问题（#916）
+- 🐛 合并默认与用户配置，用户配置只需填写变更项即可（#892，@wongsyrone）
+- 🐛 修复结果生成失败问题（#863，#870，#875）
+
+<details>
+  <summary>English</summary>
+
+- 🎉 Preview: 💻[IPTV-Web](https://github.com/Guovin/iptv-web): IPTV live stream management platform, supports online
+  playback and other features, under development...
+- ⚠️ Note: If upgrading from an older version, you need to manually delete the old version's result cache file
+  `output/cache.pkl`
+- ✨ Added support for `IPv6 domain name resolution`, improving IPv6 interface recognition capability (#910)
+- ✨ Simplified Docker update time environment variable to `UPDATE_CRON`, supporting multiple time settings (#920)
+- ✨ Updated offline data for multicast sources and hotel sources
+- 🪄 Removed default proxy due to high access pressure causing failures, it is recommended to define your own proxy
+  address for subscription sources and results, or follow the public account to get the proxy address
+- 🪄 Refactored channel data format from `tuple` to `dict`, added type definitions, optimized data processing, and
+  adjusted directory structure
+- 🪄 Precompiled regex matching to improve efficiency
+- 🐛 Adjusted Docker `FFmpeg` build version to resolve issues with some domain names not being able to get resolution (
+  #864)
+- 🐛 Fixed issue of creating duplicate scheduled tasks when Docker restarts (#916)
+- 🐛 Merged default and user configurations, users only need to fill in the changes (#892, @wongsyrone)
+- 🐛 Fixed issue of result generation failure (#863, #870, #875)
+
+</details>
+
+## v1.6.0
+
+### 2025/1/22
+
+- ✨ 新增支持`本地源`
+- ✨ 使用新的代理地址`https://ghproxy.cc`
+- ✨ 新增支持Docker修改定时任务时间，环境变量：`UPDATE_CRON1`, `UPDATE_CRON2`（#440）
+- ✨ 新增同域名重复执行测速次数配置`sort_duplicate_limit`
+- ✨ 新增`广东联通`RTP
+- 🐛 修复补偿模式结果输出问题（#813）
+- 🐛 修复无域名后缀、空格接口匹配问题（#832，#837）
+- 🐛 修复无结果状态文件写入报错（#841）
+- 🐛 修复GUI无法保存测速延迟设置
+- 🐛 修复Docker版本文件丢失（#800）
+- 🪄 `open_use_old_result`更名为`open_history`
+- 🪄 优化对接口中`%`符号的转义处理（#853）
+- 🪄 优化以接口Host去重（#846）
+- 🪄 支持协议类型偏好`ipv_type_prefer`可设置为空，可实现全部类型按速率排序输出结果
+
+<details>
+  <summary>English</summary>
+
+- ✨ Added support for `local sources`
+- ✨ Using new proxy address `https://ghproxy.cc`
+- ✨ Added support for modifying Docker scheduled task time, environment variables: `UPDATE_CRON1`, `UPDATE_CRON2` (#440)
+- ✨ Added configuration for the number of speed tests for the same domain `sort_duplicate_limit`
+- ✨ Added `Guangdong Unicom` RTP
+- 🐛 Fixed compensation mode result output issue (#813)
+- 🐛 Fixed issue with interface matching without domain suffix and spaces (#832, #837)
+- 🐛 Fixed error writing to file in no result state (#841)
+- 🐛 Fixed GUI unable to save speed test delay settings
+- 🐛 Fixed Docker version file loss issue (#800)
+- 🪄 `open_use_old_result` renamed to `open_history`
+- 🪄 Optimized escaping of `%` symbol in interfaces (#853)
+- 🪄 Optimized deduplication by interface host (#846)
+- 🪄 Supported setting `ipv_type_prefer` to empty, allowing all types to be sorted by speed for output results
+
+</details>
+
 ## v1.5.9
 
 ### 2025/1/8
